@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<div id="content-wrapper">
+
+	<div class="page-content">
+
+		<!-- Header Bar -->
+		<div class="row header col-xs-12">
+			<div class="user pull-right">
+				<div class="item dropdown">
+					<a href="#" class="dropdown-toggle"><img src="components/img/avatar.jpg" alt="" /></a>
+				</div>
+			</div>
+			<div class="meta">
+				<div class="page">Dashboard</div>
+				<div class="breadcrumb-links">Home / Dashboard</div>
+			</div>
+		</div>
+		<!-- End Header Bar -->
+
+
+		<!-- Tables -->
+		<div class="row">
+
+			<!-- Widget listing -->
+			<div class="col-lg-12">
+				<div class="widget">
+					<div class="widget-header">Widgets
+						<div class="pull-right">
+							<button class="btn btn-sm btn-info" (click)="createWidget.open()">
+								+ Create
+							</button>
+						</div>
+					</div>
+					<div class="table-responsive">
+						<table class="table">
+							<thead>
+								<tr>
+									<th class="text-center">ID</th>
+									<th>Name</th>
+									<th>Color</th>
+									<th>Price</th>
+									<th>Melts?</th>
+									<th>Inventory</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr *ngFor="let w of filteredWidgets">
+									<td class="text-center" (click)="itemSelected(w); createWidget.open();">{{w.id}}</td>
+									<td>{{w.name}}</td>
+									<td>{{w.color}}</td>
+									<!-- <td>{{w.price | currency: 'USD': true}}</td> -->
+									<td>{{w.price}}</td>
+									<td>{{w.melts | formatBoolean}}</td>
+									<td>{{w.inventory}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- End Widgets -->
+
+		</div>
+		<!-- End Row -->
+
+		<hr/>
+
+		<modal #createWidget title="Create Widget" [closeOnEscape]="false" [closeOnOutsideClick]="false">
+			<modal-content>
+				<form #f="ngForm" class="form-horizontal" novalidate>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="widget-name">Name</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" placeholder="foo-bar" name="name" [(ngModel)]="widget.name" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="widget-price">Price</label>
+						<div class="col-sm-10">
+							<div class="input-group">
+								<span class="input-group-addon">$</span>
+								<input type="number" class="form-control" [(ngModel)]="widget.price" name="price" placeholder="0.00" />
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="widget-color">Color</label>
+						<div class="col-sm-10">
+							<select [(ngModel)]="widget.color" class="form-control" name="color">
+								<option>red</option>
+								<option>purple</option>
+								<option>black</option>
+								<option>green</option>
+								<option>magenta</option>
+								<option>white</option>
+								<option>depends on the viewing angle</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+							<div class="checkbox">
+								<label>
+									<input id="widget-melt" type="checkbox" name="melts" [(ngModel)]="widget.melts"/>Melts
+								</label>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="widget-inventory">Inventory</label>
+						<div class="col-sm-10">
+							<input type="number" class="form-control" [(ngModel)]="widget.inventory" name="inventory" placeholder="#?" />
+						</div>
+					</div>
+				</form>
+			</modal-content>
+			<modal-footer>
+				<button class="btn btn-primary" (click)="save(f.value); createWidget.close();">Create</button>
+			</modal-footer>
+		</modal>
+	</div>
+	<!-- End Page Content -->
+</div>
+<!-- End Content Wrapper -->
